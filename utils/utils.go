@@ -58,3 +58,24 @@ func ScoreEnglish(text string, c map[rune]float64) float64 {
 	total := utf8.RuneCountInString(text)
 	return score / float64(total)
 }
+
+// SingleXOR calculate the XOR between an input and a one byte char
+func SingleXOR(in []byte, key byte) []byte {
+	res := make([]byte, len(in))
+	for i, c := range in {
+		res[i] = c ^ key
+	}
+	return res
+}
+
+// ReadFixturesFile reads a file under ${project_root}/fixtures
+func ReadFixturesFile(filename string) string {
+  pwd, _ := os.Getwd()
+  filepath := pwd + "/../fixtures/" + filename
+  text, err := ioutil.ReadFile(filepath)
+  if err != nil {
+    errStr := fmt.Sprintf("failed to open file %s: %v", filepath, err)
+    panic(errStr)
+  }
+  return string(text)
+}
